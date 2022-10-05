@@ -14,6 +14,5 @@ pub mod ray;
 pub mod sphere;
 pub mod tuple;
 pub mod world;
-
 pub type F = f64;
-const EPSILON:F = 0.001;
+pub const EPSILON: f64 = 0.001;

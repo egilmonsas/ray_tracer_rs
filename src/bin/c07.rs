@@ -26,14 +26,17 @@ macro_rules! time_it {
     };
 }
 fn main() {
-    time_it!("Raytracing", ray_trace(1920, 1080));
+    time_it!("Raytracing", ray_trace(1000, 1000));
 }
 
 fn ray_trace(canvas_width: usize, canvas_height: usize) {
     //World params
     let pixel_count = canvas_width * canvas_height;
     let canvas_mutex = Mutex::new(VCanvas::new(canvas_width, canvas_height));
-    let light = VPointLight::new(VTuple::point(-5.0, 15.0, -10.0), VColor::new(0.9, 0.9, 0.9));
+    let light = VPointLight::new(
+        VTuple::point(-15.0, 10.0, -15.0),
+        VColor::new(0.9, 0.9, 0.9),
+    );
     let camera = VCamera::new(canvas_width, canvas_height, PI / 3.0).positioned_and_pointed(
         VTuple::point(-10.0, 10.0, -10.0),
         VTuple::point(0.0, 0.0, 0.0),
@@ -62,22 +65,13 @@ fn ray_trace(canvas_width: usize, canvas_height: usize) {
         spc: 0.0,
         ..VPhong::default()
     });
-    let floor = VPlane::default()
-        .with_material(wall_mat);
-    let wall1 = VPlane::default()
-        .with_material(wall_mat)
-        .with_transform(VMatrix::rotation_x(PI/4.0));
-    let wall2 = VPlane::default()
-        .with_material(wall_mat)
-        .with_transform(VMatrix::rotation_z(PI/4.0));
+    let floor = VPlane::default().with_material(wall_mat);
 
     let world = VWorld::new(
         vec![
             VBody::from(sphere1),
             VBody::from(sphere2),
             VBody::from(floor),
-            VBody::from(wall1),
-            VBody::from(wall2),
         ],
         vec![light],
     );

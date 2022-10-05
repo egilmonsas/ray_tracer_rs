@@ -1,1 +1,3 @@
-Following along with ray tracer implementation https://www.youtube.com/c/MrJakob
+# Simple, cpu-single threaded ray tracer in rust.
+
+![Example](output.png 'Example')
